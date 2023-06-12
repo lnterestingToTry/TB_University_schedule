@@ -1,0 +1,2 @@
+TOKEN = "5891017736:AAHvKAjyPtw_eNU3Od0R2JdGHH5dmuQlD-k"
+BOT_NAME = "PNU Schedule"
