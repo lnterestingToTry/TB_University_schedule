@@ -75,7 +75,7 @@ class Database:
 
 
 	def today_select_group(self, group_id):
-		sql = f'''SELECT schedule.schedule_id, academics.first_name, academics.second_name, groups_.name, audiences.name, disciplines.name, timestamps_.start_date, timestamps_.end_date, timestamps_.date_
+		sql = f'''SELECT academics.first_name, academics.second_name, groups_.name, audiences.name, disciplines.name, timestamps_.start_date, timestamps_.end_date, timestamps_.date_
 					FROM schedule
 					inner JOIN academics ON schedule.academic_id = academics.academic_id
 					inner JOIN groups_ ON schedule.group_id = groups_.group_id

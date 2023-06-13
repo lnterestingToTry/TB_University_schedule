@@ -9,6 +9,8 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from keyboard import Keyboard
 from database import Database
 
+from answers_list import Answer
+
 import re
 
 bot = Bot(TOKEN)
@@ -160,14 +162,17 @@ async def today(message: types.Message):
 	group_id = user_info[0][0]
 	print(group_id)
 
+
+
 	today_schadule_info = db.today_select_group(group_id)
 
+	answer += Answer.one_day(today_schadule_info)
 
 	print(today_schadule_info)
 
 	await message.delete()
 
-	await message.answer(text='сьогодні', reply_markup=keyboard)
+	await message.answer(text=answer, reply_markup=keyboard)
 
 
 
