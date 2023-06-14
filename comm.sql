@@ -68,10 +68,15 @@ inner JOIN academics ON schedule.academic_id = academics.academic_id
 inner JOIN groups_ ON schedule.group_id = groups_.group_id
 inner JOIN audiences ON schedule.audience_id = audiences.audience_id
 inner JOIN disciplines ON schedule.discipline_id = disciplines.discipline_id
-inner JOIN timestamps_ ON schedule.timestamp_id = timestamps_.timestamp_id;
+inner JOIN timestamps_ ON schedule.timestamp_id = timestamps_.timestamp_id
+ORDER BY timestamps_.date_;
 
 
-CALL generate_schedule_dates('2023-06-11', '2023-06-13')
+
+
+
+
+CALL generate_schedule_dates('2023-06-01', '2023-06-30')
 
 
 select * from users
@@ -98,6 +103,7 @@ delete from disciplines where discipline_id != -1
 delete from users where user_id != -1
 delete from groups_ where group_id != -1
 delete from faculty where faculty_id != -1
+delete from academics where academic_id != -1
 delete from schedule where schedule_id != -1
 
 
@@ -151,61 +157,12 @@ BEGIN
             (TIME('08:15:00'), TIME('09:35:00'), loop_date),
             (TIME('09:50:00'), TIME('11:10:00'), loop_date),
             (TIME('12:00:00'), TIME('13:20:00'), loop_date),
-           	(TIME('13:35:00'), TIME('14:55:00'), loop_date),
-          	(TIME('15:10:00'), TIME('16:30:00'), loop_date),
-         	(TIME('16:45:00'), TIME('18:05:00'), loop_date);
+            (TIME('13:35:00'), TIME('14:55:00'), loop_date),
+            (TIME('15:10:00'), TIME('16:30:00'), loop_date),
+            (TIME('16:45:00'), TIME('18:05:00'), loop_date);
         
         SET loop_date = DATE_ADD(loop_date, INTERVAL 1 DAY);
     END WHILE;
 END
 
 DROP PROCEDURE IF EXISTS generate_schedule_dates;
-
-
-INSERT INTO faculty (name) VALUES
-    ('Faculty of Science'),
-    ('Faculty of Arts'),
-    ('Faculty of Engineering');
-
-INSERT INTO groups_ (name, faculty_id) VALUES
-    ('Group A', 1),
-    ('Group B', 1),
-    ('Group C', 2),
-    ('Group D', 3),
-    ('Group E', 2);
-
-INSERT INTO academics (first_name, second_name, middle_name) VALUES
-    ('John', 'Doe', 'A.'),
-    ('Jane', 'Smith', 'B.'),
-    ('Michael', 'Johnson', 'C.'),
-    ('Emily', 'Brown', 'D.');
-
-
-INSERT INTO audiences (name, description) VALUES
-    ('Audience 1', 'Description 1'),
-    ('Audience 2', 'Description 2'),
-    ('Audience 3', 'Description 3');
-
-INSERT INTO disciplines (name) VALUES
-    ('Mathematics'),
-    ('Physics'),
-    ('Chemistry');
-
-
-
-INSERT INTO schedule (academic_id, group_id, audience_id, discipline_id, timestamp_id) VALUES
-    (1, 1, 1, 1, 271),
-    (2, 2, 2, 2, 272),
-    (3, 3, 3, 3, 274),
-    (1, 1, 1, 1, 278),
-    (2, 2, 2, 2, 279),
-    (3, 3, 3, 3, 280),
-    (1, 1, 1, 1, 285),
-    (2, 2, 2, 2, 286),
-    (3, 3, 3, 3, 287)
-
-
-INSERT INTO users (group_id, academic_id) VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3);
